@@ -101,3 +101,58 @@ library(plotrix)
 ?plotrix
 
 par(mfrow = c(1,1), col.axis = "red")
+plot(1:6, las = 3, xlab = "lty 1:6", ylab = "", main = "Mais opções ao plot")
+ablineclip(v=1, lty=1, col="sienna2", lwd=2)
+ablineclip(v=2, lty=1, col="sienna2", lwd=2)
+ablineclip(v=3, lty=1, col="sienna2", lwd=2)
+ablineclip(v=4, lty=1, col="sienna2", lwd=2)
+ablineclip(v=5, lty=1, col="sienna2", lwd=2)
+ablineclip(v=6, lty=1, col="sienna2", lwd=2)
+ablineclip(v=7, lty=1, col="sienna2", lwd=2)
+
+plot(lynx)
+plot(lynx, type="p", main="Type p")
+plot(lynx, type="l", main="Type l")
+plot(lynx, type="b", main="Type b")
+plot(lynx, type="o", main="Type o")
+plot(lynx, type="h", main="Type h")
+plot(lynx, type="s", main="Type s")
+plot(lynx, type="n", main="Type n")
+
+# Two plots at once
+par(mar = c(4,3,3,3), col.axis="black")
+
+plot(cars$speed, type="s", col="red", bty="n", xlab="Cars ID", ylab="")
+text(8, 14, "Velocidade", cex=0.85, col="red")
+par(new=T)
+
+plot(cars$dist, type="s", bty="n", ann=F, axes=F, col="darkblue")
+axis(side=4)
+text(37, 18, "Distância", cex=0.85, col="darkblue")
+
+title(main="Velocidade x Distância")
+
+# Plotting from datasets
+df <- read.csv('pibpercap.csv', stringsAsFactors = F)
+df_1982 <- subset(df, ano == 1982)
+plot(expectativa ~ pibpercap, data = df_1982, log = "x")
+View(df)
+
+# Naming columns
+mycol <- c(Asia = "tomato", Europe = "chocolate4", Africa = "dodgerblue2",
+           Americas = "darkgoldenrod1", Oceania = "green4")
+
+# Plot
+plot(expectativa ~ pibpercap, data = df_1982, log = "x", col = mycol[continente])
+
+# Function to scale
+mycex <- function(var, r, f = sqrt){
+  x = f(var)
+  x_scaled = (x - min(x))/(max(x) - min(x))
+  r[1] + x_scaled * (r[2] - r[1])
+}
+
+# Plot
+plot(expectativa ~ pibpercap, data = df_1982, lox = "x",
+     col = mycol[continente],
+     cex = mycex(pop, r = c(0.2, 10)))
